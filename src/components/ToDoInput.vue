@@ -46,7 +46,7 @@ export default {
     overflow: hidden;
     text-align: center;
     padding: 7px 15px 7px 15px;
-    background-color: #007580;
+    background-color: #9fd8df;
     border-radius: 5px;
   }
 

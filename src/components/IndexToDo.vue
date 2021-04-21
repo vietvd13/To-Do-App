@@ -1,6 +1,7 @@
 <template>
     <div>
         <div class="todo">
+            <h1>To Do</h1>
             <ToDoInput />
             <ToDoList />
             <ToDoFooter />
@@ -29,5 +30,11 @@ export default {
         width: 30%;
         margin: 0 auto;
         margin-top: 80px;
+    }
+
+    .todo > h1 {
+        text-align: center;
+        font-weight: 800;
+        font-size: 40px;
     }
 </style>
