@@ -21,16 +21,13 @@ export default {
     },
     methods: {
       addNewTask() {
-        console.log('Start Do Add New Task!');
+        let newTask = {
+          status: false,
+          title: this.handle2String(this.newTask)
+        }
 
-        let newTask = this.handle2String(this.newTask);
         this.$store.dispatch('app/setNewTask', newTask);
         this.newTask = '';
-
-        console.log('End Do Add New Task!');
-
-        console.log('List Task After Add');
-        console.log(this.$store.getters.listTask);
       },
 
       handle2String(val) {
