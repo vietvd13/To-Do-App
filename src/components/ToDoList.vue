@@ -155,8 +155,8 @@ export default {
         border: none;
         border-radius: 5px;
         padding: 5px 10px 5px 10px;
-        background-color: #c7ffd8;
-        color: #333;
+        background-color: #fff;
+        color: #000;
         cursor: pointer;
     }
 
