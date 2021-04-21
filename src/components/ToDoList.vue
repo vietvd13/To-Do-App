@@ -13,10 +13,13 @@
                 >
             </div>
 
-            <div :class="handleTaskCompleted(task.status)">
-                <span>
-                    {{ task.title }}
-                </span>
+            <div class="zone-list-input">
+                <input 
+                    type="text" 
+                    v-model="task.title" 
+                    :class="handleTaskCompleted(task.status)"
+                    @keyup.enter="isEditTitleTask(index, task.title)"
+                >
             </div>
 
             <div class="todo-remove">
@@ -77,6 +80,15 @@ export default {
             }
 
             return currentClass.join(' ');
+        },
+
+        isEditTitleTask(index, title) {
+            let task = {
+                index: index,
+                title: title
+            };
+
+            this.$store.dispatch('app/updateTitleTask', task);
         }
     }
 }
@@ -104,20 +116,26 @@ export default {
         align-items: center;
     }
 
-    .todo-title {
+    .zone-list-input {
         width: 70%;
         min-height: 30px;
-        background-color: #ffffff;
         border-radius: 5px;
         padding: 5px;
     }
 
-    .todo-title > span {
-        display: flex;
-        align-items: center;
-        min-height: 30px;
-        word-break: break-all;
-        font-weight: 600;
+    .todo-title {
+        width: 98%;
+        height: 25px;
+        padding: 5px 5px 5px 5px;
+        font-size: 18px;
+        overflow: hidden;
+        margin: 0 auto;
+        border-radius: 5px;
+        border: none;
+    }
+
+    .todo-title:focus {
+        outline: none;
     }
 
     .todo-remove {

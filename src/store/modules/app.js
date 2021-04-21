@@ -18,6 +18,12 @@ const mutations = {
     let status = task.status;
 
     state.listTask[index].status = status;
+  },
+  UPDATE_TITLE_TASK: (state, task) => {
+    let index = task.index;
+    let title = task.title;
+
+    state.listTask[index].title = title;
   }
 }
 
@@ -30,6 +36,9 @@ const actions = {
   },
   updateStatusTask({ commit }, task) {
     commit('UPDATE_STATUS_TASK', task);
+  },
+  updateTitleTask({ commit }, task) {
+    commit('UPDATE_TITLE_TASK', task);
   }
 };
 
