@@ -10,6 +10,7 @@
         v-model="newTask"
         @keyup.enter="addNewTask()"
       >
+      <p style="margin-bottom: 10px; font-size: 13px;">Total number of tasks available: {{ count }}</p>
     </div>
   </div>
 </template>
@@ -17,9 +18,21 @@
 <script>
 export default {
     name: 'ToDoInput',
+    computed: {
+      isListTaskChange() {
+        return this.$store.getters.originListTask;
+      }
+    },
+    watch: {
+      isListTaskChange() {
+        this.count = this.$store.getters.originListTask.length;
+      }
+    },
     data() {
+      let lengthListTask = this.$store.getters.originListTask.length;
       return {
-        newTask: ''
+        newTask: '',
+        count: lengthListTask,
       }
     },
     methods: {
