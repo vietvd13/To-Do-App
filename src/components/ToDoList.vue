@@ -19,6 +19,7 @@
                     v-model="task.title" 
                     :class="handleTaskCompleted(task.status)"
                     @keyup.enter="isEditTitleTask(index, task.title)"
+                    spellcheck="false"
                 >
             </div>
 
