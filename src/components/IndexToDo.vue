@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div>
+        <div class="todo">
             <ToDoInput />
             <ToDoList />
             <ToDoFooter />
@@ -25,5 +25,9 @@ export default {
 </script>
 
 <style scoped>
-
+    .todo {
+        width: 30%;
+        margin: 0 auto;
+        margin-top: 80px;
+    }
 </style>

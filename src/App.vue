@@ -14,4 +14,13 @@ export default {
     ToDo
   }
 }
-</script>
+</script>]
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+  body {
+    background: #f5f4f4;
+    font-family: 'Roboto', sans-serif;
+  }
+</style>
