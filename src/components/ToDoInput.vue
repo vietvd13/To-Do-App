@@ -16,6 +16,9 @@
 </template>
 
 <script>
+// Import validate
+import { IsEmptyOrWhiteSpace } from '../helper/validate';
+
 export default {
     name: 'ToDoInput',
     computed: {
@@ -37,13 +40,19 @@ export default {
     },
     methods: {
       addNewTask() {
-        let newTask = {
-          status: false,
-          title: this.handle2String(this.newTask)
-        }
+        let title = this.handle2String(this.newTask);
 
-        this.$store.dispatch('app/setNewTask', newTask);
-        this.newTask = '';
+        if (!IsEmptyOrWhiteSpace(title)) {
+          let newTask = {
+            status: false,
+            title: title
+          }
+
+          this.$store.dispatch('app/setNewTask', newTask);
+          this.newTask = '';
+        } else {
+          alert('Please enter something!');
+        }
       },
 
       handle2String(val) {

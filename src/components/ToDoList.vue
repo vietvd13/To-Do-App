@@ -35,6 +35,9 @@
 </template>
 
 <script>
+// Import validate
+import { IsEmptyOrWhiteSpace } from '../helper/validate';
+
 export default {
     name: 'ToDoList',
     computed: {
@@ -89,12 +92,18 @@ export default {
         },
 
         isEditTitleTask(index, title) {
-            let task = {
-                index: index,
-                title: title
-            };
+            if (!IsEmptyOrWhiteSpace(title)) {
+                let task = {
+                    index: index,
+                    title: title
+                };
 
-            this.$store.dispatch('app/updateTitleTask', task);
+                this.$store.dispatch('app/updateTitleTask', task);
+
+                alert('Update successful!');
+            } else {
+                alert('Please enter something!');
+            }
         },
     }
 }
