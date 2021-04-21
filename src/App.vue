@@ -20,7 +20,7 @@ export default {
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
   body {
-    background: #f5f4f4;
+    background: #f6f6f6;
     font-family: 'Roboto', sans-serif;
   }
 </style>
