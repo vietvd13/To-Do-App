@@ -89,7 +89,7 @@ export default {
             };
 
             this.$store.dispatch('app/updateTitleTask', task);
-        }
+        },
     }
 }
 </script>
