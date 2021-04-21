@@ -70,7 +70,7 @@ export default {
                     border: none;
                     border-radius: 5px;
                     background-color: #98ded9;
-                    color: #fff;
+                    color: #000;
                     cursor: pointer;
                 `;
             }
