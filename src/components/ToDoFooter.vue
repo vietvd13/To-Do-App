@@ -1,20 +1,40 @@
 <template>
     <div>
-        <div class="zone-footer" v-if="cout > 0">
+        <div class="zone-footer" v-if="cout > 0" :key="Rerender">
             <div class="show-all">
-                <button>All</button>
+                <button 
+                    :style="isFilterClass(typeShow, 0)" 
+                    @click="handleFilter(0)"
+                >
+                    All
+                </button>
             </div>
 
             <div class="show-complete">
-                <button>Complete</button>
+                <button 
+                    :style="isFilterClass(typeShow, 1)" 
+                    @click="handleFilter(1)"
+                >
+                    Complete
+                </button>
             </div>
 
             <div class="show-process">
-                <button>Process</button>
+                <button 
+                    :style="isFilterClass(typeShow, 2)" 
+                    @click="handleFilter(2)"
+                >
+                    Process
+                </button>
             </div>
 
             <div class="clear-all">
-                <button>Clear all</button>
+                <button 
+                    :style="isFilterClass(typeShow, 3)" 
+                    @click="handleFilter(3)"
+                >
+                    Clear all
+                </button>
             </div>
         </div>
     </div>
@@ -26,11 +46,17 @@ export default {
     computed: {
         isListTaskChange() {
             return this.$store.getters.listTask;
+        },
+        isTypeShowChange() {
+            return this.typeShow;
         }
     },
     watch: {
         isListTaskChange() {
             this.cout = this.$store.getters.listTask.length;
+        },
+        isTypeShowChange() {
+            this.Rerender += 1;
         }
     },
     data() {
@@ -38,6 +64,39 @@ export default {
     
         return {
             cout: lenghtTask,
+            typeShow: 0,
+            Rerender: 0,
+        }
+    },
+    methods: {
+        isFilterClass(status, origin) {
+            if (status === origin) {
+                return `
+                    min-width: 90%;
+                    height: 90%;
+                    justify-content: center;
+                    border: none;
+                    border-radius: 5px;
+                    background-color: #f05945;
+                    color: #fff;
+                    cursor: pointer;
+                `;
+            }
+
+            return `
+                min-width: 90%;
+                height: 90%;
+                justify-content: center;
+                border: none;
+                border-radius: 5px;
+                background-color: #fff;
+                color: #000;
+                cursor: pointer;
+            `;
+        },
+
+        handleFilter(typeFilter) {
+            this.typeShow = typeFilter;
         }
     }
 }
