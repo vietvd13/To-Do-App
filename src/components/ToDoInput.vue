@@ -10,7 +10,7 @@
         v-model="newTask"
         @keyup.enter="addNewTask()"
       >
-      <p style="margin-bottom: 10px; font-size: 13px;">Total number of tasks available: {{ count }}</p>
+      <p style="margin-bottom: 10px; font-size: 13px; color: #fff;">Total number of tasks available: {{ count }}</p>
     </div>
   </div>
 </template>
@@ -60,7 +60,7 @@ export default {
     overflow: hidden;
     text-align: center;
     padding: 7px 15px 7px 15px;
-    background-color: #9fd8df;
+    background-color: #161d6f;
     border-radius: 5px;
   }
 
@@ -82,7 +82,7 @@ export default {
  .zone-input > h2 {
    margin-top: 5px;
    margin-bottom: 10px;
-   color: #000;
+   color: #fff;
    font-size: 20px;
  }
 </style>

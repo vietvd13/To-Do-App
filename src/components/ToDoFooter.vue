@@ -69,7 +69,7 @@ export default {
                     justify-content: center;
                     border: none;
                     border-radius: 5px;
-                    background-color: #f05945;
+                    background-color: #98ded9;
                     color: #fff;
                     cursor: pointer;
                 `;
@@ -120,7 +120,7 @@ export default {
     .zone-footer {
         width: 100%;
         height: 30px;
-        background-color: #9fd8df;
+        background-color: #161d6f;
         padding: 7px 15px 7px 15px;
         margin-top: 5px;
         border-radius: 5px;

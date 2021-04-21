@@ -29,7 +29,7 @@ export default {
     .todo {
         width: 30%;
         margin: 0 auto;
-        margin-top: 80px;
+        margin-top: 30px;
     }
 
     .todo > h1 {

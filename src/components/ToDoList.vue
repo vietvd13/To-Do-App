@@ -103,7 +103,7 @@ export default {
     .zone-list {
         width: 100%;
         min-height: 30px;
-        background-color: #f5c0c0;
+        background-color: #98ded9;
         padding: 7px 15px 7px 15px;
         padding-top: 7px;
         padding-bottom: 7px;
@@ -155,9 +155,8 @@ export default {
         border: none;
         border-radius: 5px;
         padding: 5px 10px 5px 10px;
-        background-color: #f25287;
-        color: #ffffff;
-        font-weight: 600;
+        background-color: #c7ffd8;
+        color: #333;
         cursor: pointer;
     }
 
