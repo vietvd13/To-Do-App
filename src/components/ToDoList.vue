@@ -1,16 +1,29 @@
 <template>
     <div :key="Rerender">
-        <div class="zone-list" v-for="(task, index) in ListTask" :key="index">
+        <div 
+            class="zone-list" 
+            v-for="(task, index) in ListTask" 
+            :key="index"
+        >
             <div class="todo-status">
-                <input type="checkbox" :v-model="task.status">
+                <input 
+                    type="checkbox" 
+                    :v-model="task.status"
+                >
             </div>
 
             <div class="todo-title">
-                <span>{{ task.title }}</span>
+                <span>
+                    {{ task.title }}
+                </span>
             </div>
 
             <div class="todo-remove">
-                <button>Delete</button>
+                <button 
+                    @click="isDeleteTask(index)"
+                >
+                    Delete
+                </button>
             </div>
         </div>
     </div>
@@ -40,7 +53,11 @@ export default {
         this.ListTask = this.$store.getters.listTask;
     },
     methods: {
-
+        isDeleteTask(index) {
+            if (confirm(`Do you really want to delete this task?`)) {
+                this.$store.dispatch('app/deleteTask', index);
+            }
+        }
     }
 }
 </script>

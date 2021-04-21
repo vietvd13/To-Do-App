@@ -67,8 +67,9 @@ export default {
  }
 
  .zone-input > h2 {
-   margin-top: 10px;
+   margin-top: 5px;
    margin-bottom: 10px;
    color: #000;
+   font-size: 20px;
  }
 </style>
