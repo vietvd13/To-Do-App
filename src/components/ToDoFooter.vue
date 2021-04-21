@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="zone-footer" v-if="cout > 0" :key="Rerender">
+        <div class="zone-footer" :key="Rerender">
             <div class="show-all">
                 <button 
                     :style="isFilterClass(typeShow, 0)" 
@@ -44,27 +44,19 @@
 export default {
     name: 'ToDoFooter',
     computed: {
-        isListTaskChange() {
-            return this.$store.getters.listTask;
-        },
         isTypeShowChange() {
             return this.typeShow;
         }
     },
     watch: {
-        isListTaskChange() {
-            this.cout = this.$store.getters.listTask.length;
-        },
         isTypeShowChange() {
             this.Rerender += 1;
         }
     },
     data() {
-        let lenghtTask = this.$store.getters.listTask.length;
-    
+        let type = this.$store.getters.typeFilter;
         return {
-            cout: lenghtTask,
-            typeShow: 0,
+            typeShow: type,
             Rerender: 0,
         }
     },
@@ -96,7 +88,29 @@ export default {
         },
 
         handleFilter(typeFilter) {
-            this.typeShow = typeFilter;
+            if (typeFilter === 3) {
+                let lengthListTask = this.$store.getters.listTask.length;
+
+                if (lengthListTask > 0) {
+                    if (confirm('Want to clear your task list?')) {
+                        this.typeShow = typeFilter;
+
+                        this.$store.dispatch('app/filterListTask', this.typeShow);
+
+                        this.typeShow = 0;
+
+                        this.$store.dispatch('app/setTypeFilter', this.typeShow);
+                    }
+                } else{
+                    alert('No tasks exist to delete!');
+                }
+            } else {
+                this.typeShow = typeFilter;
+
+                this.$store.dispatch('app/filterListTask', this.typeShow);
+
+                this.$store.dispatch('app/setTypeFilter', this.typeShow);
+            }
         }
     }
 }

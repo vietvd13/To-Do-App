@@ -70,6 +70,11 @@ export default {
             };
 
             this.$store.dispatch('app/updateStatusTask', task);
+
+            let type = this.$store.getters.typeFilter;
+
+            this.$store.dispatch('app/setTypeFilter', type);
+            this.$store.dispatch('app/filterListTask', type);
         },
 
         handleTaskCompleted(status) {
