@@ -7,11 +7,17 @@ const mutations = {
     state.listTask.push(newTask);
   },
   DELETE_TASK: (state, index) => {
-    var listTask = state.listTask;
+    let listTask = state.listTask;
 
     listTask.splice(index, 1);
 
     state.listTask = listTask;
+  },
+  UPDATE_STATUS_TASK: (state, task) => {
+    let index = task.index;
+    let status = task.status;
+
+    state.listTask[index].status = status;
   }
 }
 
@@ -21,6 +27,9 @@ const actions = {
   },
   deleteTask({ commit }, index) {
     commit('DELETE_TASK', index);
+  },
+  updateStatusTask({ commit }, task) {
+    commit('UPDATE_STATUS_TASK', task);
   }
 };
 

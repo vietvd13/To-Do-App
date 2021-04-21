@@ -8,11 +8,12 @@
             <div class="todo-status">
                 <input 
                     type="checkbox" 
-                    :v-model="task.status"
+                    v-model="task.status"
+                    @change="isChangeStatusTask(index, task.status)"
                 >
             </div>
 
-            <div class="todo-title">
+            <div :class="handleTaskCompleted(task.status)">
                 <span>
                     {{ task.title }}
                 </span>
@@ -57,6 +58,25 @@ export default {
             if (confirm(`Do you really want to delete this task?`)) {
                 this.$store.dispatch('app/deleteTask', index);
             }
+        },
+
+        isChangeStatusTask(index, status) {
+            let task = {
+                index: index,
+                status: status
+            };
+
+            this.$store.dispatch('app/updateStatusTask', task);
+        },
+
+        handleTaskCompleted(status) {
+            let currentClass = ['todo-title'];
+
+            if (status) {
+                currentClass.push('todo-task-done');
+            }
+
+            return currentClass.join(' ');
         }
     }
 }
@@ -120,6 +140,12 @@ export default {
 
     .todo-remove > button:focus {
         outline: none;
+    }
+
+    .todo-task-done {
+        font-style: italic;
+        text-decoration: line-through;
+        color: #909399;
     }
 
 </style>
