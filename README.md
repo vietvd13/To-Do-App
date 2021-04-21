@@ -5,7 +5,9 @@
 <div align="center">
     <img src="./src/assets/demo.png" align="center" alt="To-Do-App-VueJS">
 </div>
+
 ## Project setup
+
 ```
 npm install
 ```
