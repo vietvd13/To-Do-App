@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="zone-input">
+      <h2>Enter new task</h2>
       <input 
         type="text" 
         name="Input New Task" 
@@ -63,5 +64,11 @@ export default {
 
  .todo--input:focus {
    outline: none;
+ }
+
+ .zone-input > h2 {
+   margin-top: 10px;
+   margin-bottom: 10px;
+   color: #000;
  }
 </style>
