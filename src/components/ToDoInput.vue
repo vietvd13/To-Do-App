@@ -23,16 +23,16 @@ export default {
     name: 'ToDoInput',
     computed: {
       isListTaskChange() {
-        return this.$store.getters.originListTask;
+        return this.$store.getters.listTask;
       }
     },
     watch: {
       isListTaskChange() {
-        this.count = this.$store.getters.originListTask.length;
+        this.count = this.$store.getters.listTask.length;
       }
     },
     data() {
-      let lengthListTask = this.$store.getters.originListTask.length;
+      let lengthListTask = this.$store.getters.listTask.length;
       return {
         newTask: '',
         count: lengthListTask,

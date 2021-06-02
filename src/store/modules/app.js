@@ -1,13 +1,16 @@
+import Cookie from 'js-cookie';
+import { getListTask, getTypeFilter } from '../../helper/getDataInCookie';
+
 const state = {
-  listTask: [],
-  originListTask: [],
-  typeFilter: 0
+  listTask: getListTask(),
+  typeFilter: getTypeFilter()
 };
 
 const mutations = {
   SET_NEW_TASK: (state, newTask) => {
     state.listTask.push(newTask);
-    state.originListTask.push(newTask);
+
+    Cookie.set('list-task', state.listTask);
   },
   DELETE_TASK: (state, index) => {
     let listTask = state.listTask;
@@ -15,50 +18,35 @@ const mutations = {
     listTask.splice(index, 1);
 
     state.listTask = listTask;
-    state.originListTask = listTask;
+
+    Cookie.set('list-task', state.listTask);
+  },
+  DELETE_ALL_TASK: (state) => {
+    state.listTask = [];
+
+    Cookie.set('list-task', state.listTask);
   },
   UPDATE_STATUS_TASK: (state, task) => {
     let index = task.index;
     let status = task.status;
 
     state.listTask[index].status = status;
-    state.originListTask[index].status = status;
+
+    Cookie.set('list-task', state.listTask);
   },
   UPDATE_TITLE_TASK: (state, task) => {
     let index = task.index;
     let title = task.title;
 
     state.listTask[index].title = title;
-    state.originListTask[index].title = title;
+
+    Cookie.set('list-task', state.listTask);
   },
   SET_TYPE_FILTER: (state, type) => {
     state.typeFilter = type;
+
+    Cookie.set('type-filter', state.typeFilter);
   },
-  FILTER_LIST_TASK: (state, type) => {
-    let listTask = state.originListTask;
-
-    switch (type) {
-      case 0:
-        state.listTask = listTask;
-
-        break;
-      case 1:
-        state.listTask = listTask.filter(option => option.status === true);
-
-        break;
-      case 2:
-        state.listTask = listTask.filter(option => option.status === false);
-
-        break;
-      case 3:
-        state.listTask = [];
-        state.originListTask = [];
-
-        break;
-      default:
-
-    }
-  }
 }
 
 const actions = {
@@ -68,6 +56,9 @@ const actions = {
   deleteTask({ commit }, index) {
     commit('DELETE_TASK', index);
   },
+  deleteAllTask({ commit }) {
+    commit('DELETE_ALL_TASK');
+  },
   updateStatusTask({ commit }, task) {
     commit('UPDATE_STATUS_TASK', task);
   },
@@ -76,9 +67,6 @@ const actions = {
   },
   setTypeFilter({ commit }, type) {
     commit('SET_TYPE_FILTER', type);
-  },
-  filterListTask({ commit }, type) {
-    commit('FILTER_LIST_TASK', type);
   }
 };
 

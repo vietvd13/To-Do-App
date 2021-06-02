@@ -13,12 +13,13 @@
                 >
             </div>
 
-            <div class="zone-list-input">
+            <div class="zone-list-input" ref="listTask">
                 <input 
                     type="text" 
                     v-model="task.title" 
                     :class="handleTaskCompleted(task.status)"
-                    @keyup.enter="isEditTitleTask(index, task.title)"
+                    :disabled="task.status"
+                    @change="isEditTitleTask(index, task.title)"
                     spellcheck="false"
                 >
             </div>
@@ -43,12 +44,18 @@ export default {
     computed: {
         isListTaskChange() {
             return this.$store.getters.listTask;
+        },
+        isFilterChange() {
+            return this.$store.getters.typeFilter;
         }
     },
     watch: {
         isListTaskChange() {
             this.ListTask = this.$store.getters.listTask;
             this.Rerender += 1;
+        },
+        isFilterChange() {
+            this.handleFilter();
         }
     },
     data() {
@@ -57,8 +64,9 @@ export default {
             Rerender: 0,
         }
     },
-    mounted() {
+    created() {
         this.ListTask = this.$store.getters.listTask;
+        this.handleFilter();
     },
     methods: {
         isDeleteTask(index) {
@@ -73,12 +81,21 @@ export default {
                 status: status
             };
 
-            this.$store.dispatch('app/updateStatusTask', task);
+            this.$store.dispatch('app/updateStatusTask', task)
+                .then(() => {
+                    let type = this.$store.getters.typeFilter;
 
-            let type = this.$store.getters.typeFilter;
-
-            this.$store.dispatch('app/setTypeFilter', type);
-            this.$store.dispatch('app/filterListTask', type);
+                    this.$store.dispatch('app/setTypeFilter', type)
+                        .then(() => {
+                            this.handleFilter();
+                        })
+                        .catch(() => {
+                            alert('You have error!');
+                        })
+                })
+                .catch(() => {
+                    alert('You have error!');
+                });
         },
 
         handleTaskCompleted(status) {
@@ -103,8 +120,29 @@ export default {
                 alert('Update successful!');
             } else {
                 alert('Please enter something!');
+                this.$refs.listTask[index].childNodes[0].focus();
             }
         },
+
+        handleFilter() {
+            const type = this.$store.getters.typeFilter;
+
+            if (type === 0) {
+                this.ListTask = this.$store.getters.listTask;
+            } else if (type === 1) {
+                this.ListTask = this.$store.getters.listTask.filter(option => option.status === true);
+            } else if (type === 2) {
+                this.ListTask = this.$store.getters.listTask.filter(option => option.status === false);
+            } else if (type === 3) {
+                this.$store.dispatch('app/deleteAllTask')
+                    .then(() => {
+                        alert('Delete successfully!');
+                    })
+                    .catch(() => {
+                        alert('You have error!');
+                    })
+            }
+        }
     }
 }
 </script>
@@ -178,6 +216,10 @@ export default {
         font-style: italic;
         text-decoration: line-through;
         color: #909399;
+    }
+
+    .todo-task-done:disabled {
+        background-color: #e1e5ea;
     }
 
 </style>

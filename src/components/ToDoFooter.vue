@@ -95,19 +95,21 @@ export default {
                     if (confirm('Want to clear your task list?')) {
                         this.typeShow = typeFilter;
 
-                        this.$store.dispatch('app/filterListTask', this.typeShow);
+                        this.$store.dispatch('app/setTypeFilter', this.typeShow)
+                            .then(() => {
+                                this.typeShow = 0;
 
-                        this.typeShow = 0;
-
-                        this.$store.dispatch('app/setTypeFilter', this.typeShow);
+                                this.$store.dispatch('app/setTypeFilter', this.typeShow);
+                            })
+                            .catch(() => {
+                                alert('You have error!');
+                            })
                     }
                 } else{
                     alert('No tasks exist to delete!');
                 }
             } else {
                 this.typeShow = typeFilter;
-
-                this.$store.dispatch('app/filterListTask', this.typeShow);
 
                 this.$store.dispatch('app/setTypeFilter', this.typeShow);
             }
