@@ -1,38 +1,43 @@
 <template>
     <div :key="Rerender">
         <div v-if="ListTask.length > 0">
-            <div 
-                class="zone-list" 
-                v-for="(task, index) in ListTask" 
-                :key="index"
+            <draggable
+                :list="ListTask" 
+                v-bind="dragOptions"
             >
-                <div class="todo-status">
-                    <input 
-                        type="checkbox" 
-                        v-model="task.status"
-                        @change="isChangeStatusTask(index, task.status)"
-                    >
-                </div>
+                <div 
+                    class="zone-list" 
+                    v-for="(task, index) in ListTask" 
+                    :key="index"
+                >
+                    <div class="todo-status">
+                        <input 
+                            type="checkbox" 
+                            v-model="task.status"
+                            @change="isChangeStatusTask(index, task.status)"
+                        >
+                    </div>
 
-                <div class="zone-list-input" ref="listTask">
-                    <input 
-                        type="text" 
-                        v-model="task.title" 
-                        :class="handleTaskCompleted(task.status)"
-                        :disabled="task.status"
-                        @change="isEditTitleTask(index, task.title)"
-                        spellcheck="false"
-                    >
-                </div>
+                    <div class="zone-list-input" ref="listTask">
+                        <input 
+                            type="text" 
+                            v-model="task.title" 
+                            :class="handleTaskCompleted(task.status)"
+                            :disabled="task.status"
+                            @change="isEditTitleTask(index, task.title)"
+                            spellcheck="false"
+                        >
+                    </div>
 
-                <div class="todo-remove">
-                    <button 
-                        @click="isDeleteTask(index)"
-                    >
-                        Delete
-                    </button>
+                    <div class="todo-remove">
+                        <button 
+                            @click="isDeleteTask(index)"
+                        >
+                            Delete
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </draggable>
         </div>
 
         <div v-else>
@@ -47,15 +52,28 @@
 // Import validate
 import { IsEmptyOrWhiteSpace } from '../helper/validate';
 
+// Import component
+import draggable from 'vuedraggable';
+
 export default {
     name: 'ToDoList',
+    components: {
+        draggable
+    },
     computed: {
         isListTaskChange() {
             return this.$store.getters.listTask;
         },
         isFilterChange() {
             return this.$store.getters.typeFilter;
-        }
+        },
+        dragOptions() {
+            return {
+                animation: 150,
+                group: 'task',
+                handle: '.zone-list'
+            };
+        },
     },
     watch: {
         isListTaskChange() {
