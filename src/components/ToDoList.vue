@@ -1,35 +1,43 @@
 <template>
     <div :key="Rerender">
-        <div 
-            class="zone-list" 
-            v-for="(task, index) in ListTask" 
-            :key="index"
-        >
-            <div class="todo-status">
-                <input 
-                    type="checkbox" 
-                    v-model="task.status"
-                    @change="isChangeStatusTask(index, task.status)"
-                >
-            </div>
+        <div v-if="ListTask.length > 0">
+            <div 
+                class="zone-list" 
+                v-for="(task, index) in ListTask" 
+                :key="index"
+            >
+                <div class="todo-status">
+                    <input 
+                        type="checkbox" 
+                        v-model="task.status"
+                        @change="isChangeStatusTask(index, task.status)"
+                    >
+                </div>
 
-            <div class="zone-list-input" ref="listTask">
-                <input 
-                    type="text" 
-                    v-model="task.title" 
-                    :class="handleTaskCompleted(task.status)"
-                    :disabled="task.status"
-                    @change="isEditTitleTask(index, task.title)"
-                    spellcheck="false"
-                >
-            </div>
+                <div class="zone-list-input" ref="listTask">
+                    <input 
+                        type="text" 
+                        v-model="task.title" 
+                        :class="handleTaskCompleted(task.status)"
+                        :disabled="task.status"
+                        @change="isEditTitleTask(index, task.title)"
+                        spellcheck="false"
+                    >
+                </div>
 
-            <div class="todo-remove">
-                <button 
-                    @click="isDeleteTask(index)"
-                >
-                    Delete
-                </button>
+                <div class="todo-remove">
+                    <button 
+                        @click="isDeleteTask(index)"
+                    >
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div v-else>
+            <div class="zone-list">
+                <span class="no-data">No Data</span>
             </div>
         </div>
     </div>
@@ -51,7 +59,18 @@ export default {
     },
     watch: {
         isListTaskChange() {
-            this.ListTask = this.$store.getters.listTask;
+            const type = this.$store.getters.typeFilter;
+
+            if (type === 0) {
+                this.ListTask = this.$store.getters.listTask;
+            } else if (type === 1) {
+                this.ListTask = this.$store.getters.listTask.filter(option => option.status === true);
+            } else if (type === 2) {
+                this.ListTask = this.$store.getters.listTask.filter(option => option.status === false);
+            } else {
+                this.ListTask = this.$store.getters.listTask;
+            }
+            
             this.Rerender += 1;
         },
         isFilterChange() {
@@ -65,7 +84,18 @@ export default {
         }
     },
     created() {
-        this.ListTask = this.$store.getters.listTask;
+        const type = this.$store.getters.typeFilter;
+
+        if (type === 0) {
+            this.ListTask = this.$store.getters.listTask;
+        } else if (type === 1) {
+            this.ListTask = this.$store.getters.listTask.filter(option => option.status === true);
+        } else if (type === 2) {
+            this.ListTask = this.$store.getters.listTask.filter(option => option.status === false);
+        } else {
+            this.ListTask = this.$store.getters.listTask;
+        }
+
         this.handleFilter();
     },
     methods: {
@@ -220,6 +250,16 @@ export default {
 
     .todo-task-done:disabled {
         background-color: #e1e5ea;
+    }
+
+    .no-data {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+        font-style: italic;
+        font-weight: 500;
     }
 
 </style>
